@@ -12,13 +12,7 @@ import Foundation
 struct CalculatorBrain {
     
     private var accumulator: Double?
-    
-    var resultIsPending: Bool {
-        get {
-            if pendingBinaryOperation != nil { return true }
-            else { return false }
-        }
-    }
+    private var pendingBinaryOperation: PendingBinaryOperation?
     
     private enum Operation {
         case constant(Double)
@@ -26,7 +20,7 @@ struct CalculatorBrain {
         case binaryOperation((Double, Double) -> Double)
         case equals
     }
-    
+
     private var operations: Dictionary<String, Operation> = [
         "π" : Operation.constant(Double.pi),
         "e" : Operation.constant(M_E),
@@ -42,6 +36,30 @@ struct CalculatorBrain {
         "−" : Operation.binaryOperation({ $0 - $1 }),
         "=" : Operation.equals
     ]
+    
+    var resultIsPending: Bool {
+        get {
+            if pendingBinaryOperation != nil { return true }
+            else { return false }
+        }
+    }
+    
+    var description: String?
+    
+    var result: Double? {
+        get {
+            return accumulator
+        }
+    }
+    
+    private struct PendingBinaryOperation {
+        let function: ((Double, Double) -> Double)
+        let firstOperand: Double
+        
+        func performBinaryOperation(with secondOperand: Double) -> Double {
+            return function(firstOperand, secondOperand)
+        }
+    }
     
     mutating func performOperation(_ symbol: String) {
         if let operation = operations[symbol] {
@@ -70,24 +88,8 @@ struct CalculatorBrain {
         }
     }
     
-    private var pendingBinaryOperation: PendingBinaryOperation?
-    
-    private struct PendingBinaryOperation {
-        let function: ((Double, Double) -> Double)
-        let firstOperand: Double
-        
-        func performBinaryOperation(with secondOperand: Double) -> Double {
-            return function(firstOperand, secondOperand)
-        }
-    }
-    
     mutating func setOperand(_ operand: Double) {
         accumulator = operand
     }
     
-    var result: Double? {
-        get {
-            return accumulator
-        }
-    }
 }
