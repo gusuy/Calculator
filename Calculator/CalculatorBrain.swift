@@ -13,6 +13,13 @@ struct CalculatorBrain {
     
     private var accumulator: Double?
     
+    var resultIsPending: Bool {
+        get {
+            if pendingBinaryOperation != nil { return true }
+            else { return false }
+        }
+    }
+    
     private enum Operation {
         case constant(Double)
         case unaryOperation((Double) -> Double)
