@@ -11,9 +11,11 @@ import UIKit
 class ViewController: UIViewController {
     
     @IBOutlet weak var display: UILabel!
+    @IBOutlet weak var descriptionLabel: UILabel!
     var userIsInTheMiddleOfTyping = false
     private var brain = CalculatorBrain()
 
+    
     @IBAction func touchDigit(_ sender: UIButton) {
         let digit = sender.currentTitle!
         
@@ -36,6 +38,19 @@ class ViewController: UIViewController {
         }
     }
     
+    var descriptionLabelValue: String {
+        get {
+            return descriptionLabel.text!
+        }
+        set {
+            if brain.resultIsPending {
+                descriptionLabel.text! = newValue + "..."
+            } else {
+                descriptionLabel.text! = newValue + "="
+            }
+        }
+    }
+    
     @IBAction func performOperation(_ sender: UIButton) {
         if userIsInTheMiddleOfTyping {
             brain.setOperand(displayValue)
@@ -46,6 +61,9 @@ class ViewController: UIViewController {
         }
         if let result = brain.result {
             displayValue = result
+        }
+        if let sequenceDescription = brain.description {
+            descriptionLabelValue = sequenceDescription
         }
     }
     
