@@ -44,9 +44,9 @@ class ViewController: UIViewController {
         }
         set {
             if brain.resultIsPending {
-                descriptionLabel.text! = newValue + "..."
+                descriptionLabel.text! = newValue + " ..."
             } else {
-                descriptionLabel.text! = newValue + "="
+                descriptionLabel.text! = newValue + " ="
             }
         }
     }
