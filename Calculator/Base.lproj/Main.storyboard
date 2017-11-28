@@ -48,6 +48,9 @@
                                                         <state key="normal" title="C">
                                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         </state>
+                                                        <connections>
+                                                            <action selector="clear" destination="BYZ-38-t0r" eventType="touchUpInside" id="UUV-9s-L4c"/>
+                                                        </connections>
                                                     </button>
                                                 </subviews>
                                             </stackView>

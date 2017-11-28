@@ -14,7 +14,6 @@ class ViewController: UIViewController {
     @IBOutlet weak var descriptionLabel: UILabel!
     var userIsInTheMiddleOfTyping = false
     private var brain = CalculatorBrain()
-
     
     @IBAction func touchDigit(_ sender: UIButton) {
         let digit = sender.currentTitle!
@@ -34,7 +33,7 @@ class ViewController: UIViewController {
             return Double(display.text!)!
         }
         set {
-            display.text! = String(newValue)
+            display.text = String(newValue)
         }
     }
     
@@ -44,9 +43,9 @@ class ViewController: UIViewController {
         }
         set {
             if brain.resultIsPending {
-                descriptionLabel.text! = newValue + " ..."
+                descriptionLabel.text = newValue + " ..."
             } else {
-                descriptionLabel.text! = newValue + " ="
+                descriptionLabel.text = newValue + " ="
             }
         }
     }
@@ -65,6 +64,13 @@ class ViewController: UIViewController {
         if let sequenceDescription = brain.description {
             descriptionLabelValue = sequenceDescription
         }
+    }
+    
+    @IBAction func clear() {
+        brain = CalculatorBrain()
+        display.text = "0"
+        descriptionLabel.text = " "
+        userIsInTheMiddleOfTyping = false
     }
     
 }
